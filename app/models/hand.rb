@@ -1,0 +1,3 @@
+class Hand
+  $cards
+end
