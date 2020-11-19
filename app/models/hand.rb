@@ -1,4 +1,5 @@
 class Hand
+  include Constants
 
   $minScore = -1
 

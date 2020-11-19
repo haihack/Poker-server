@@ -1,9 +1,10 @@
-module Api::V1
+module API::V1
   class CardsController < ApplicationController
     include Constants
 
     def create
       # puts request.body.read
+      $minScore = -1;
       objArray = JSON.parse(request.body.read)
       handsJson = objArray["cards"]
       @hands = Array.new
@@ -26,7 +27,6 @@ module Api::V1
     end
 
     private
-
     def isInputDataValidated(hand)
       error = nil
       cards = hand.squish.split(" ")
