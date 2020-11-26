@@ -2,8 +2,31 @@ require 'rails_helper'
 require 'spec_helper'
 
 describe V1::HandChecking, :type => :request do
+
   include Constants
+  HAND_TYPES = %w[ロイヤルフラッシュ ストレートフラッシュ フォー・オブ・ア・カインド フルハウス フラッシュ ストレート スリー・オブ・ア・カインド ツーペア ワンペア ハイカー]
+  HANDTYPES_ROYAL_FLUSH = 0
+  HANDTYPES_STRAIGHT_FLUSH = 1
+  HANDTYPES_4_OF_A_KIND = 2
+  HANDTYPES_FULL_HOUSE = 3
+  HANDTYPES_FLUSH = 4
+  HANDTYPES_STRAIGHT = 5
+  HANDTYPES_3_OF_A_KIND = 6
+  HANDTYPES_2_PAIRS = 7
+  HANDTYPES_1_PAIR = 8
+  HANDTYPES_HIGH_CARD = 9
+
   include Rack::Test::Methods
+
+  let(:url) { '/api/v1/hand_checkings' }
+
+  def getRank(last_response, index)
+    JSON.parse(last_response.body)["result"][index]["rank"]
+  end
+
+  def getError(last_response)
+    JSON.parse(last_response.body)['error'][0]['error']
+  end
 
   context 'POST /api/v1/hand_checkings' do
     describe "ok" do
@@ -11,90 +34,90 @@ describe V1::HandChecking, :type => :request do
         body = { "cards": [
           "H1 H13 H12 H11 H10"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_royal_flush]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_ROYAL_FLUSH]
       end
 
       it 'return STRAIGHT_FLUSH hand' do
         body = { "cards": [
           "H1 H2 H3 H4 H5"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_straight_flush]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH]
       end
 
       it 'return FOUR_OF_A_KIND hand' do
         body = { "cards": [
           "H1 H7 D7 C7 S7"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_4_of_a_kind]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_4_OF_A_KIND]
       end
 
       it 'return FULL_HOUSE hand' do
         body = { "cards": [
           "H1 S1 D1 H5 D5"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_full_house]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_FULL_HOUSE]
       end
 
       it 'return FLUSH hand' do
         body = { "cards": [
           "H1 H13 H5 H6 H10"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_flush]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_FLUSH]
       end
 
       it 'return STRAIGHT hand' do
         body = { "cards": [
           "H1 C2 D3 H4 H5"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_straight]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_STRAIGHT]
       end
 
       it 'return THREE_OF_A_KIND hand' do
         body = { "cards": [
           "H1 D1 C1 H11 D10"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_3_of_a_kind]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_3_OF_A_KIND]
       end
 
       it 'return TWO_PAIRS hand' do
         body = { "cards": [
           "H1 D1 H12 D12 C5"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_2_pairs]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_2_PAIRS]
       end
 
       it 'return ONE_PAIR hand' do
         body = { "cards": [
           "H1 D1 H5 S11 H10"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_1_pair]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_1_PAIR]
       end
 
       it 'return HIGH_CARD hand' do
         body = { "cards": [
           "H1 D13 C4 S8 H10"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)["result"][0]["rank"]).to eq $handTypes[$handTypes_high_card]
+        expect(getRank(last_response, 0)).to eq HAND_TYPES[HANDTYPES_HIGH_CARD]
       end
 
       it 'return result of multiple hand' do
@@ -110,20 +133,20 @@ describe V1::HandChecking, :type => :request do
           "H1 D1 H5 S11 H10",
           "H1 D13 C4 S8 H10"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
         expect(JSON.parse(last_response.body)['result'][0]['best']).to be_truthy
         expect(JSON.parse(last_response.body)['result'].size).to eq(10)
-        expect(JSON.parse(last_response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_royal_flush])
-        expect(JSON.parse(last_response.body)['result'][1]['rank']).to eq($handTypes[$handTypes_straight_flush])
-        expect(JSON.parse(last_response.body)['result'][2]['rank']).to eq($handTypes[$handTypes_4_of_a_kind])
-        expect(JSON.parse(last_response.body)['result'][3]['rank']).to eq($handTypes[$handTypes_full_house])
-        expect(JSON.parse(last_response.body)['result'][4]['rank']).to eq($handTypes[$handTypes_flush])
-        expect(JSON.parse(last_response.body)['result'][5]['rank']).to eq($handTypes[$handTypes_straight])
-        expect(JSON.parse(last_response.body)['result'][6]['rank']).to eq($handTypes[$handTypes_3_of_a_kind])
-        expect(JSON.parse(last_response.body)['result'][7]['rank']).to eq($handTypes[$handTypes_2_pairs])
-        expect(JSON.parse(last_response.body)['result'][8]['rank']).to eq($handTypes[$handTypes_1_pair])
-        expect(JSON.parse(last_response.body)['result'][9]['rank']).to eq($handTypes[$handTypes_high_card])
+        expect(getRank(last_response, 0)).to eq(HAND_TYPES[HANDTYPES_ROYAL_FLUSH])
+        expect(getRank(last_response, 1)).to eq(HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH])
+        expect(getRank(last_response, 2)).to eq(HAND_TYPES[HANDTYPES_4_OF_A_KIND])
+        expect(getRank(last_response, 3)).to eq(HAND_TYPES[HANDTYPES_FULL_HOUSE])
+        expect(getRank(last_response, 4)).to eq(HAND_TYPES[HANDTYPES_FLUSH])
+        expect(getRank(last_response, 5)).to eq(HAND_TYPES[HANDTYPES_STRAIGHT])
+        expect(getRank(last_response, 6)).to eq(HAND_TYPES[HANDTYPES_3_OF_A_KIND])
+        expect(getRank(last_response, 7)).to eq(HAND_TYPES[HANDTYPES_2_PAIRS])
+        expect(getRank(last_response, 8)).to eq(HAND_TYPES[HANDTYPES_1_PAIR])
+        expect(getRank(last_response, 9)).to eq(HAND_TYPES[HANDTYPES_HIGH_CARD])
       end
 
     end
@@ -133,50 +156,50 @@ describe V1::HandChecking, :type => :request do
         body = { "cards": [
           "H1 H13 Y12 H15 H16"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)['error'][0]['error'].size).to eq(3)
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["name"]).to eq('Y12')
-        expect(JSON.parse(last_response.body)['error'][0]['error'][1]["name"]).to eq('H15')
-        expect(JSON.parse(last_response.body)['error'][0]['error'][2]["name"]).to eq('H16')
+        expect(getError(last_response).size).to eq(3)
+        expect(getError(last_response)[0]["name"]).to eq('Y12')
+        expect(getError(last_response)[1]["name"]).to eq('H15')
+        expect(getError(last_response)[2]["name"]).to eq('H16')
       end
 
       it 'request to check empty hand' do
         body = { "cards": [
           ""
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["message"]).to eq('５枚のカードが必要です。')
+        expect(getError(last_response)[0]["message"]).to eq('５枚のカードが必要です。')
       end
 
       it 'uncompleted hand' do
         body = { "cards": [
           "H1 H2 H3"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["message"]).to eq('５枚のカードが必要です。')
+        expect(getError(last_response)[0]["message"]).to eq('５枚のカードが必要です。')
       end
 
       it 'over 5 cards in a hand' do
         body = { "cards": [
           "H1 H2 H3 H5 H6 H7"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["message"]).to eq('５枚のカードが必要です。')
+        expect(getError(last_response)[0]["message"]).to eq('５枚のカードが必要です。')
       end
 
       it 'hand with duplicated cards' do
         body = { "cards": [
           "H1 H5 H3 H5 H5"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["message"]).to include('重複')
-        expect(JSON.parse(last_response.body)['error'][0]['error'][1]["message"]).to include('重複')
-        expect(JSON.parse(last_response.body)['error'][0]['error'][2]["message"]).to include('重複')
+        expect(getError(last_response)[0]["message"]).to include('重複')
+        expect(getError(last_response)[1]["message"]).to include('重複')
+        expect(getError(last_response)[2]["message"]).to include('重複')
       end
 
       it 'check multiple hands with an invalid hand' do
@@ -193,38 +216,38 @@ describe V1::HandChecking, :type => :request do
           "H1 D13 C4 S8 H10",
           "H1 D13 C4 S8 H100"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
         expect(JSON.parse(last_response.body)['result'][0]['best']).to be_truthy
         expect(JSON.parse(last_response.body)['result'].size).to eq(10)
-        expect(JSON.parse(last_response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_royal_flush])
-        expect(JSON.parse(last_response.body)['result'][1]['rank']).to eq($handTypes[$handTypes_straight_flush])
-        expect(JSON.parse(last_response.body)['result'][2]['rank']).to eq($handTypes[$handTypes_4_of_a_kind])
-        expect(JSON.parse(last_response.body)['result'][3]['rank']).to eq($handTypes[$handTypes_full_house])
-        expect(JSON.parse(last_response.body)['result'][4]['rank']).to eq($handTypes[$handTypes_flush])
-        expect(JSON.parse(last_response.body)['result'][5]['rank']).to eq($handTypes[$handTypes_straight])
-        expect(JSON.parse(last_response.body)['result'][6]['rank']).to eq($handTypes[$handTypes_3_of_a_kind])
-        expect(JSON.parse(last_response.body)['result'][7]['rank']).to eq($handTypes[$handTypes_2_pairs])
-        expect(JSON.parse(last_response.body)['result'][8]['rank']).to eq($handTypes[$handTypes_1_pair])
-        expect(JSON.parse(last_response.body)['result'][9]['rank']).to eq($handTypes[$handTypes_high_card])
+        expect(getRank(last_response, 0)).to eq(HAND_TYPES[HANDTYPES_ROYAL_FLUSH])
+        expect(getRank(last_response, 1)).to eq(HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH])
+        expect(getRank(last_response, 2)).to eq(HAND_TYPES[HANDTYPES_4_OF_A_KIND])
+        expect(getRank(last_response, 3)).to eq(HAND_TYPES[HANDTYPES_FULL_HOUSE])
+        expect(getRank(last_response, 4)).to eq(HAND_TYPES[HANDTYPES_FLUSH])
+        expect(getRank(last_response, 5)).to eq(HAND_TYPES[HANDTYPES_STRAIGHT])
+        expect(getRank(last_response, 6)).to eq(HAND_TYPES[HANDTYPES_3_OF_A_KIND])
+        expect(getRank(last_response, 7)).to eq(HAND_TYPES[HANDTYPES_2_PAIRS])
+        expect(getRank(last_response, 8)).to eq(HAND_TYPES[HANDTYPES_1_PAIR])
+        expect(getRank(last_response, 9)).to eq(HAND_TYPES[HANDTYPES_HIGH_CARD])
 
-        expect(JSON.parse(last_response.body)['error'][0]['error'].size).to eq(1)
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["name"]).to eq('H100')
+        expect(getError(last_response).size).to eq(1)
+        expect(getError(last_response)[0]["name"]).to eq('H100')
       end
 
       it 'check invalid format and duplication at once' do
         body = { "cards": [
           "H1 H2 H30 H5 H5"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 201
-        expect(JSON.parse(last_response.body)['error'][0]['error'].size).to eq 3
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["index"]).to eq 3
-        expect(JSON.parse(last_response.body)['error'][0]['error'][1]["index"]).to eq 3
-        expect(JSON.parse(last_response.body)['error'][0]['error'][2]["index"]).to eq 4
-        expect(JSON.parse(last_response.body)['error'][0]['error'][0]["message"]).to include('不正')
-        expect(JSON.parse(last_response.body)['error'][0]['error'][1]["message"]).to include('重複')
-        expect(JSON.parse(last_response.body)['error'][0]['error'][2]["message"]).to include('重複')
+        expect(getError(last_response).size).to eq 3
+        expect(getError(last_response)[0]["index"]).to eq 3
+        expect(getError(last_response)[1]["index"]).to eq 3
+        expect(getError(last_response)[2]["index"]).to eq 4
+        expect(getError(last_response)[0]["message"]).to include('不正')
+        expect(getError(last_response)[1]["message"]).to include('重複')
+        expect(getError(last_response)[2]["message"]).to include('重複')
       end
 
       it 'request get method' do
@@ -233,7 +256,7 @@ describe V1::HandChecking, :type => :request do
       end
 
       it 'body request is not json' do
-        post '/api/v1/hand_checkings', "sahgaks", 'CONTENT_TYPE' => 'application/json'
+        post url, "sahgaks", 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 400
         expect(last_response.body).to include "does not match"
       end
@@ -242,7 +265,7 @@ describe V1::HandChecking, :type => :request do
         body = { "card": [
           "H1 H2 H30 H5 H5"
         ] }
-        post '/api/v1/hand_checkings', body.to_json, 'CONTENT_TYPE' => 'application/json'
+        post url, body.to_json, 'CONTENT_TYPE' => 'application/json'
         expect(last_response.status).to eq 400
         expect(last_response.body).to include "is missing"
       end

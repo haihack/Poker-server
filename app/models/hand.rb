@@ -10,9 +10,9 @@ class Hand
     stringHand.split(" ").each_with_index do |card, i|
       rank = card[1..-1].to_i # card rank
       suit = card.first # card suit
-      prime = $map[rank][1]
-      index = $map[rank][0]
-      cards[i] = prime | (index << 8) | $mapSuits[suit] | (1 << (16 + index))
+      prime = MAP[rank][1]
+      index = MAP[rank][0]
+      cards[i] = prime | (index << 8) | MAP_SUITS[suit] | (1 << (16 + index))
     end
 
     score = evaluateHand(cards)
@@ -51,39 +51,37 @@ class Hand
     return Values::DATA[q]
   end
 
-  private
   def getHandRank(score)
     if (score > 6185)
-      return $handTypes[$handTypes_high_card]#'HIGH_CARD'
+      return HAND_TYPES[HANDTYPES_HIGH_CARD]#'HIGH_CARD'
     end
     if (score > 3325)
-      return $handTypes[$handTypes_1_pair]#'ONE_PAIR'
+      return HAND_TYPES[HANDTYPES_1_PAIR]#'ONE_PAIR'
     end
     if (score > 2467)
-      return $handTypes[$handTypes_2_pairs]#'TWO_PAIRS'
+      return HAND_TYPES[HANDTYPES_2_PAIRS]#'TWO_PAIRS'
     end
     if (score > 1609)
-      return $handTypes[$handTypes_3_of_a_kind]#'THREE_OF_A_KIND'
+      return HAND_TYPES[HANDTYPES_3_OF_A_KIND]#'THREE_OF_A_KIND'
     end
     if (score > 1599)
-      return $handTypes[$handTypes_straight]#'STRAIGHT'
+      return HAND_TYPES[HANDTYPES_STRAIGHT]#'STRAIGHT'
     end
     if (score > 322)
-      return $handTypes[$handTypes_flush]#'FLUSH'
+      return HAND_TYPES[HANDTYPES_FLUSH]#'FLUSH'
     end
     if (score > 166)
-      return $handTypes[$handTypes_full_house]#'FULL_HOUSE'
+      return HAND_TYPES[HANDTYPES_FULL_HOUSE]#'FULL_HOUSE'
     end
     if (score > 10)
-      return $handTypes[$handTypes_4_of_a_kind]#'FOUR_OF_A_KIND'
+      return HAND_TYPES[HANDTYPES_4_OF_A_KIND]#'FOUR_OF_A_KIND'
     end
     if (score > 1)
-      return $handTypes[$handTypes_straight_flush]#'STRAIGHT_FLUSH'
+      return HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH]#'STRAIGHT_FLUSH'
     end
-    return $handTypes[$handTypes_royal_flush]#'ROYAL_FLUSH'
+    return HAND_TYPES[HANDTYPES_ROYAL_FLUSH]#'ROYAL_FLUSH'
   end
 
-  private
   def findIt(key)
     low = 0
     high = 4887

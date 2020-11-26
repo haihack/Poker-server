@@ -27,7 +27,7 @@ describe V1::HandChecking do
   #
   #     it 'returns ROYAL_FLUSH' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_royal_flush])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_ROYAL_FLUSH])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 H13 H12 H11 H10")
   #     end
@@ -42,7 +42,7 @@ describe V1::HandChecking do
   #
   #     it 'returns STRAIGHT_FLUSH' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_straight_flush])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 H2 H3 H4 H5")
   #     end
@@ -57,7 +57,7 @@ describe V1::HandChecking do
   #
   #     it 'returns FOUR_OF_A_KIND' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_4_of_a_kind])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_4_OF_A_KIND])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 H7 D7 C7 S7")
   #     end
@@ -72,7 +72,7 @@ describe V1::HandChecking do
   #
   #     it 'returns ROYAL_FLUSH' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_royal_flush])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_ROYAL_FLUSH])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 H13 H12 H11 H10")
   #     end
@@ -87,7 +87,7 @@ describe V1::HandChecking do
   #
   #     it 'returns STRAIGHT_FLUSH' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_straight_flush])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 H2 H3 H4 H5")
   #     end
@@ -102,7 +102,7 @@ describe V1::HandChecking do
   #
   #     it 'returns FOUR_OF_A_KIND' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_4_of_a_kind])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_4_OF_A_KIND])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 H7 D7 C7 S7")
   #     end
@@ -117,7 +117,7 @@ describe V1::HandChecking do
   #
   #     it 'returns FULL_HOUSE' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_full_house])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_FULL_HOUSE])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 S1 D1 H5 D5")
   #     end
@@ -132,7 +132,7 @@ describe V1::HandChecking do
   #
   #     it 'returns FLUSH' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_flush])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_FLUSH])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 H13 H5 H6 H10")
   #     end
@@ -147,7 +147,7 @@ describe V1::HandChecking do
   #
   #     it 'returns STRAIGHT' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_straight])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_STRAIGHT])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 C2 D3 H4 H5")
   #     end
@@ -162,7 +162,7 @@ describe V1::HandChecking do
   #
   #     it 'returns THREE_OF_A_KIND' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_3_of_a_kind])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_3_OF_A_KIND])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 D1 C1 H11 D10")
   #     end
@@ -177,7 +177,7 @@ describe V1::HandChecking do
   #
   #     it 'returns TWO_PAIRS' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_2_pairs])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_2_PAIRS])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 D1 H12 D12 C5")
   #     end
@@ -202,16 +202,16 @@ describe V1::HandChecking do
   #         expect(response).to have_http_status(:success)
   #         expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #         expect(JSON.parse(response.body)['result'].size).to eq(10)
-  #         expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_royal_flush])
-  #         expect(JSON.parse(response.body)['result'][1]['rank']).to eq($handTypes[$handTypes_straight_flush])
-  #         expect(JSON.parse(response.body)['result'][2]['rank']).to eq($handTypes[$handTypes_4_of_a_kind])
-  #         expect(JSON.parse(response.body)['result'][3]['rank']).to eq($handTypes[$handTypes_full_house])
-  #         expect(JSON.parse(response.body)['result'][4]['rank']).to eq($handTypes[$handTypes_flush])
-  #         expect(JSON.parse(response.body)['result'][5]['rank']).to eq($handTypes[$handTypes_straight])
-  #         expect(JSON.parse(response.body)['result'][6]['rank']).to eq($handTypes[$handTypes_3_of_a_kind])
-  #         expect(JSON.parse(response.body)['result'][7]['rank']).to eq($handTypes[$handTypes_2_pairs])
-  #         expect(JSON.parse(response.body)['result'][8]['rank']).to eq($handTypes[$handTypes_1_pair])
-  #         expect(JSON.parse(response.body)['result'][9]['rank']).to eq($handTypes[$handTypes_high_card])
+  #         expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_ROYAL_FLUSH])
+  #         expect(JSON.parse(response.body)['result'][1]['rank']).to eq(HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH])
+  #         expect(JSON.parse(response.body)['result'][2]['rank']).to eq(HAND_TYPES[HANDTYPES_4_OF_A_KIND])
+  #         expect(JSON.parse(response.body)['result'][3]['rank']).to eq(HAND_TYPES[HANDTYPES_FULL_HOUSE])
+  #         expect(JSON.parse(response.body)['result'][4]['rank']).to eq(HAND_TYPES[HANDTYPES_FLUSH])
+  #         expect(JSON.parse(response.body)['result'][5]['rank']).to eq(HAND_TYPES[HANDTYPES_STRAIGHT])
+  #         expect(JSON.parse(response.body)['result'][6]['rank']).to eq(HAND_TYPES[HANDTYPES_3_OF_A_KIND])
+  #         expect(JSON.parse(response.body)['result'][7]['rank']).to eq(HAND_TYPES[HANDTYPES_2_PAIRS])
+  #         expect(JSON.parse(response.body)['result'][8]['rank']).to eq(HAND_TYPES[HANDTYPES_1_PAIR])
+  #         expect(JSON.parse(response.body)['result'][9]['rank']).to eq(HAND_TYPES[HANDTYPES_HIGH_CARD])
   #       end
   #     end
   #
@@ -226,7 +226,7 @@ describe V1::HandChecking do
   #
   #     it 'returns ONE_PAIR' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_1_pair])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_1_PAIR])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 D1 H5 S11 H10")
   #     end
@@ -241,7 +241,7 @@ describe V1::HandChecking do
   #
   #     it 'returns HIGH_CARD' do
   #       expect(response).to have_http_status(:success)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_high_card])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_HIGH_CARD])
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'][0]['hand']).to eq("H1 D13 C4 S8 H10")
   #     end
@@ -342,16 +342,16 @@ describe V1::HandChecking do
   #       expect(response).to have_http_status(:success)
   #       expect(JSON.parse(response.body)['result'][0]['best']).to be_truthy
   #       expect(JSON.parse(response.body)['result'].size).to eq(10)
-  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq($handTypes[$handTypes_royal_flush])
-  #       expect(JSON.parse(response.body)['result'][1]['rank']).to eq($handTypes[$handTypes_straight_flush])
-  #       expect(JSON.parse(response.body)['result'][2]['rank']).to eq($handTypes[$handTypes_4_of_a_kind])
-  #       expect(JSON.parse(response.body)['result'][3]['rank']).to eq($handTypes[$handTypes_full_house])
-  #       expect(JSON.parse(response.body)['result'][4]['rank']).to eq($handTypes[$handTypes_flush])
-  #       expect(JSON.parse(response.body)['result'][5]['rank']).to eq($handTypes[$handTypes_straight])
-  #       expect(JSON.parse(response.body)['result'][6]['rank']).to eq($handTypes[$handTypes_3_of_a_kind])
-  #       expect(JSON.parse(response.body)['result'][7]['rank']).to eq($handTypes[$handTypes_2_pairs])
-  #       expect(JSON.parse(response.body)['result'][8]['rank']).to eq($handTypes[$handTypes_1_pair])
-  #       expect(JSON.parse(response.body)['result'][9]['rank']).to eq($handTypes[$handTypes_high_card])
+  #       expect(JSON.parse(response.body)['result'][0]['rank']).to eq(HAND_TYPES[HANDTYPES_ROYAL_FLUSH])
+  #       expect(JSON.parse(response.body)['result'][1]['rank']).to eq(HAND_TYPES[HANDTYPES_STRAIGHT_FLUSH])
+  #       expect(JSON.parse(response.body)['result'][2]['rank']).to eq(HAND_TYPES[HANDTYPES_4_OF_A_KIND])
+  #       expect(JSON.parse(response.body)['result'][3]['rank']).to eq(HAND_TYPES[HANDTYPES_FULL_HOUSE])
+  #       expect(JSON.parse(response.body)['result'][4]['rank']).to eq(HAND_TYPES[HANDTYPES_FLUSH])
+  #       expect(JSON.parse(response.body)['result'][5]['rank']).to eq(HAND_TYPES[HANDTYPES_STRAIGHT])
+  #       expect(JSON.parse(response.body)['result'][6]['rank']).to eq(HAND_TYPES[HANDTYPES_3_OF_A_KIND])
+  #       expect(JSON.parse(response.body)['result'][7]['rank']).to eq(HAND_TYPES[HANDTYPES_2_PAIRS])
+  #       expect(JSON.parse(response.body)['result'][8]['rank']).to eq(HAND_TYPES[HANDTYPES_1_PAIR])
+  #       expect(JSON.parse(response.body)['result'][9]['rank']).to eq(HAND_TYPES[HANDTYPES_HIGH_CARD])
   #
   #       expect(JSON.parse(response.body)['error'][0]['error'].size).to eq(1)
   #       expect(JSON.parse(response.body)['error'][0]['error'][0]["name"]).to eq('H100')

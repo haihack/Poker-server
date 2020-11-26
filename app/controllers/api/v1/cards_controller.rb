@@ -11,9 +11,7 @@ module API::V1
       $errors = Array.new
 
       handsJson.each do |handJson|
-        if (isInputDataValidated(handJson))
-          @hands << Hand.new(handJson)
-        end
+          @hands << Hand.new(handJson) if (isInputDataValidated(handJson))
       end
 
       @hands.each do |hand|
