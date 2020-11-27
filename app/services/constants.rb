@@ -20,7 +20,7 @@ module Constants
     "H" => 0x2000,
     "S" => 0x1000
   }
-  HAND_TYPES = %w[ロイヤルフラッシュ ストレートフラッシュ フォー・オブ・ア・カインド フルハウス フラッシュ ストレート スリー・オブ・ア・カインド ツーペア ワンペア ハイカー]
+  HAND_TYPES = %w[ロイヤルフラッシュ ストレートフラッシュ フォー・オブ・ア・カインド フルハウス フラッシュ ストレート スリー・オブ・ア・カインド ツーペア ワンペア ハイカード]
   HANDTYPES_ROYAL_FLUSH = 0
   HANDTYPES_STRAIGHT_FLUSH = 1
   HANDTYPES_4_OF_A_KIND = 2

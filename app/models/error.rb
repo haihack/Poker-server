@@ -1,6 +1,6 @@
 class Error
   def initialize(listCard, arrayError)
     @error = arrayError
-    @listCard = listCard
+    @card = listCard
   end
 end

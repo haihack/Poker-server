@@ -1,13 +1,13 @@
 class Hand
   include Constants
 
-  $minScore = -1
+  $min_score = -1
 
-  def initialize(stringHand)
-    @hand = stringHand
+  def initialize(string_hand)
+    @card = string_hand
     @best = false
     cards = Array.new (5)
-    stringHand.split(" ").each_with_index do |card, i|
+    string_hand.split(" ").each_with_index do |card, i|
       rank = card[1..-1].to_i # card rank
       suit = card.first # card suit
       prime = MAP[rank][1]
@@ -15,21 +15,21 @@ class Hand
       cards[i] = prime | (index << 8) | MAP_SUITS[suit] | (1 << (16 + index))
     end
 
-    score = evaluateHand(cards)
-    @rank = getHandRank(score)
-    if ($minScore == -1 || score < $minScore)
-      $minScore = score
-      $bestRank = @rank
+    score = evaluate_hand(cards)
+    @hand = get_hand_rank(score)
+    if ($min_score == -1 || score < $min_score)
+      $min_score = score
+      $best_rank = @hand
     end
 
   end
 
   def best
-    @best = (@rank == $bestRank)
+    @best = (@hand == $best_rank)
   end
 
   private
-  def evaluateHand(cards)
+  def evaluate_hand(cards)
     q = (cards[0] | cards[1] | cards[2] | cards[3] | cards[4]) >> 16;
 
     # check for Flushes and StraightFlushes
@@ -46,12 +46,12 @@ class Hand
 
     #  let's do it the hard way
     q = (cards[0] & 0xFF) * (cards[1] & 0xFF) * (cards[2] & 0xFF) * (cards[3] & 0xFF) * (cards[4] & 0xFF)
-    q = findIt(q)
+    q = find_it(q)
 
     return Values::DATA[q]
   end
 
-  def getHandRank(score)
+  def get_hand_rank(score)
     if (score > 6185)
       return HAND_TYPES[HANDTYPES_HIGH_CARD]#'HIGH_CARD'
     end
@@ -82,7 +82,7 @@ class Hand
     return HAND_TYPES[HANDTYPES_ROYAL_FLUSH]#'ROYAL_FLUSH'
   end
 
-  def findIt(key)
+  def find_it(key)
     low = 0
     high = 4887
 
@@ -90,14 +90,14 @@ class Hand
 
       mid = (high + low) >> 1 # divide by two
       if (key < Products::DATA[mid])
-        high = mid - 1;
+        high = mid - 1
       elsif (key > Products::DATA[mid])
-        low = mid + 1;
+        low = mid + 1
       else
         return mid
       end
     end
     puts "ERROR: Impossible hand; key = #{key}"
-    return -1;
+    return -1
   end
 end

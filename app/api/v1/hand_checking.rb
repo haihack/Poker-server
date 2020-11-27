@@ -10,14 +10,14 @@ module V1
           requires :cards, type: Array
         end
         post do
-          $minScore = -1;
-          objArray = JSON.parse(request.body.read)
-          handsJson = objArray["cards"]
+          $min_score = -1;
+          obj_array = JSON.parse(request.body.read)
+          hands_json = obj_array["cards"]
           @hands = Array.new
           $errors = Array.new
 
-          handsJson.each do |handJson|
-            @hands << Hand.new(handJson) if (isInputDataValidated(handJson))
+          hands_json.each do |handJson|
+            @hands << Hand.new(handJson) if (is_input_data_validated(handJson))
           end
 
           @hands.each do |hand|
@@ -33,23 +33,23 @@ module V1
       end
 
       helpers do
-        def isInputDataValidated(hand)
+        def is_input_data_validated(hand)
           error = nil
           cards = hand.squish.split(" ")
-          handError = []
+          hand_error = []
           #check whether the hand has 5 cards
           if (cards.size != 5)
             error = CardError.new(-1, "", "５枚のカードが必要です。")
-            handError << error
-            $errors << Error.new(hand, handError)
+            hand_error << error
+            $errors << Error.new(hand, hand_error)
             return false
           end
 
           #allow only 1 whitespace
           unless hand.strip.match(/^\S+(?: \S+)*$/)
             error = CardError.new(-1, "", "5つのカード指定文字を半角スペース区切りで入力してください。")
-            handError << error
-            $errors << Error.new(hand, handError)
+            hand_error << error
+            $errors << Error.new(hand, hand_error)
             return false
           end
 
@@ -57,7 +57,7 @@ module V1
           cards.each_with_index do |card, i|
             unless card.match(/^[HSDC]([1-9]|1[0-3])$/)
               error = CardError.new(i + 1, card, "#{i + 1}番目のカード指定文字が不正です。  #{card}")
-              handError << error
+              hand_error << error
             end
           end
 
@@ -68,11 +68,11 @@ module V1
           end
           duplicates.values.flatten.each do |i|
             error = CardError.new(i, cards[i], "#{i + 1}番目のカード指定文字が重複しています。  #{cards[i]}")
-            handError << error
+            hand_error << error
           end
 
-          if !handError.empty?
-            $errors << Error.new(hand, handError)
+          if !hand_error.empty?
+            $errors << Error.new(hand, hand_error)
           end
           return error.nil?
         end
